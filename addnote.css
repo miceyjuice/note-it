@@ -1,0 +1,59 @@
+.newNoteView {
+  margin-left: 60rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 79.3rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  height: 100vh;
+}
+
+.newNoteView__heading {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+
+.newNoteView__heading__text {
+  font-size: 4rem;
+  font-weight: 700;
+}
+
+.newNoteView__info {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+
+.newNoteView__info__title__text {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.newNoteView__info__description {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+
+.newNoteView__info__description__text {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.newNoteView__info__tags {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+
+.newNoteView__info__tags__text {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.newNoteView__buttons {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+/*# sourceMappingURL=addnote.css.map */

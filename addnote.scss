@@ -1,0 +1,53 @@
+.newNoteView {
+  margin-left: 60rem;
+  display: flex;
+  width: 79.3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 100vh;
+
+  &__heading {
+    flex-basis: 100%;
+    &__text {
+      font-size: 4rem;
+      font-weight: 700;
+    }
+  }
+  &__info {
+    flex-basis: 100%;
+    &__title {
+      &__text {
+        font-size: 2.5rem;
+        font-weight: 600;
+      }
+      &__input {
+      }
+    }
+    &__description {
+      flex-basis: 100%;
+      &__text {
+        font-size: 2.5rem;
+        font-weight: 600;
+      }
+      &__input {
+      }
+    }
+    &__tags {
+      flex-basis: 100%;
+      &__text {
+        font-size: 2.5rem;
+        font-weight: 600;
+      }
+      &__input {
+      }
+    }
+  }
+  &__buttons {
+    flex-basis: 100%;
+
+    &__add {
+    }
+    &__cancel {
+    }
+  }
+}
