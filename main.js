@@ -1,10 +1,13 @@
 class Note {
   constructor() {
-    console.log(window.location.pathname);
-    if (window.location.pathname == "/index.html") {
+    if (
+      window.location.pathname == "/index.html" ||
+      window.location.pathname == "/"
+    ) {
       this.notesCount = this.getCountOfNotes();
       this.createNoteBoard();
-      this.getCountOfNotes();
+      this.deleteNote();
+      this.addingNoteView();
     } else if (window.location.pathname == "/addnote.html") {
       this.getDataFromForm();
     }
@@ -12,12 +15,13 @@ class Note {
 
   setCountOfNotes(numberOfNotes) {
     let noteCounter = parseInt(numberOfNotes);
-    noteCounter = +1;
+    noteCounter += 1;
     localStorage.setItem("notesCount", noteCounter);
   }
 
   getDataFromForm() {
     const addBtn = document.querySelector(".newNoteView__buttons__add");
+
     addBtn.addEventListener("click", () => {
       const title = document.querySelector(".newNoteView__info__title__input")
         .value;
@@ -36,12 +40,29 @@ class Note {
   }
 
   addingNoteView() {
-    window.open("addnote.html", "_self");
+    if (
+      window.location.pathname == "/" ||
+      window.location.pathname == "/index.html"
+    ) {
+      if (this.getCountOfNotes() == 0) {
+        document.querySelector(".noNotesBtn").addEventListener("click", () => {
+          window.open("addnote.html", "_self");
+        });
+      } else {
+        document.querySelector(".topBtn").addEventListener("click", () => {
+          window.open("addnote.html", "_self");
+        });
+      }
+    }
   }
 
   changeView() {
-    const mainContainer = document.querySelector(".mainNotesView__list");
-    const content = `
+    if (
+      window.location.pathname == "/" ||
+      window.location.pathname == "/index.html"
+    ) {
+      const mainContainer = document.querySelector(".mainNotesView__list");
+      const content = `
       <div class="mainNotesView__list__noNotes">
         <div class="mainNotesView__list__noNotes__box">
           <div class="mainNotesView__list__noNotes__box__img"></div>
@@ -56,25 +77,24 @@ class Note {
       </div>
     `;
 
-    document.querySelector(".mainNotesView__topBar__addNote").style.visibility =
-      "hidden";
+      document.querySelector(
+        ".mainNotesView__topBar__addNote"
+      ).style.visibility = "hidden";
 
-    mainContainer.innerHTML = content;
-    document.querySelector(".noNotesBtn").addEventListener("click", () => {
-      this.addingNoteView();
-    });
+      mainContainer.innerHTML = content;
+      // this.addingNoteView();
+    }
   }
 
   getCountOfNotes() {
     if (localStorage.getItem("notesCount") == null) {
+      this.changeView();
       localStorage.setItem("notesCount", 0);
-      console.log(1);
       return 0;
     } else if (localStorage.getItem("notesCount") == 0) {
-      //this.changeView();
-      console.log(2);
+      this.changeView();
+      return 0;
     } else {
-      console.log(3);
       return localStorage.getItem("notesCount");
     }
   }
@@ -86,7 +106,6 @@ class Note {
     for (let i = 0; i < localStorageLength; i++) {
       notes.push(localStorage.getItem(`note${i}`));
     }
-    console.log(localStorageLength);
     return notes;
   }
 
@@ -101,13 +120,11 @@ class Note {
     this.setCountOfNotes(this.getCountOfNotes());
   }
 
-  createNoteBox(data) {
+  createNoteBox(data, itemNumber) {
     const noteBox = document.createElement("div");
     noteBox.classList.add("mainNotesView__list__noteBox");
 
-    console.log(data);
     const dataParsed = JSON.parse(data);
-    console.log(dataParsed);
     let content = `
     <p class="mainNotesView__list__noteBox__date">${dataParsed.date}</p>
     <h4 class="mainNotesView__list__noteBox__title">${dataParsed.title}</h4>
@@ -116,7 +133,7 @@ class Note {
     <div class="mainNotesView__list__noteBox__options">
       <div class="mainNotesView__list__noteBox__options__edit"></div>
       <div class="mainNotesView__list__noteBox__options__pin"></div>
-      <div class="mainNotesView__list__noteBox__options__delete"></div>
+      <div class="mainNotesView__list__noteBox__options__delete" data-key="${itemNumber}"></div>
       <div class="mainNotesView__list__noteBox__options__check"></div>
     </div>
     `;
@@ -125,23 +142,57 @@ class Note {
     return noteBox;
   }
 
+  deleteNote() {
+    if (this.getCountOfNotes() > 0) {
+      const deleteBtn = document.querySelectorAll(
+        ".mainNotesView__list__noteBox__options__delete"
+      );
+
+      for (let i = 0; i < deleteBtn.length; i++) {
+        deleteBtn[i].addEventListener("click", () => {
+          localStorage.removeItem(`note${deleteBtn[i].dataset.key}`);
+          this.redrawNotes(i);
+        });
+      }
+    }
+  }
+
+  redrawNotes(keyOfNote) {
+    const notes = this.getAllNotes();
+    const countOfNotes = notes.length;
+    console.log(countOfNotes);
+    console.log(notes);
+    console.log(keyOfNote);
+    localStorage.clear();
+    this.setCountOfNotes(-1);
+    for (let i = 0; i < notes.length - 1; i++) {
+      const note = JSON.parse(notes[i]);
+      localStorage.setItem(
+        `note${this.getCountOfNotes()}`,
+        JSON.stringify(note)
+      );
+      this.setCountOfNotes(this.getCountOfNotes());
+      console.log(note);
+    }
+    window.location.reload();
+  }
+
   createNoteBoard() {
     const notes = this.getAllNotes();
-    console.log(notes);
     const board = document.querySelector(".mainNotesView__list");
 
     for (let i = 0; i < notes.length; i++) {
-      board.appendChild(this.createNoteBox(notes[i]));
+      board.appendChild(this.createNoteBox(notes[i], i));
     }
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   const dupa = new Note();
-  dupa.createNote(
-    "10.02.2020",
-    "Najlepszy tytuł",
-    "To jest kontent nie do odrzucenia. To jest kontent nie do odrzucenia. To jest kontent nie do odrzucenia. To jest kontent nie do odrzucenia.",
-    "ważne, nieważne, super, duperka"
-  );
+  // dupa.createNote(
+  //   "10.02.2020",
+  //   "Najlepszy tytuł",
+  //   "To jest kontent nie do odrzucenia. To jest kontent nie do odrzucenia. To jest kontent nie do odrzucenia. To jest kontent nie do odrzucenia.",
+  //   "ważne, nieważne, super, duperka"
+  // );
 });
