@@ -10,6 +10,36 @@ class Note {
       this.addingNoteView();
     } else if (window.location.pathname == "/addnote.html") {
       this.getDataFromForm();
+      this.changeNoteColor();
+    }
+  }
+
+  getFullDate(date) {
+    let result = `${date.getDate()}.${
+      date.getMonth() + 1
+    }.${date.getFullYear()}`;
+
+    return result;
+  }
+
+  changeNoteColor() {
+    let active = 0;
+    const activeClass = [
+      "newNoteOptions__color__palette__default--active",
+      "newNoteOptions__color__palette__turquoise--active",
+      "newNoteOptions__color__palette__orange--active",
+      "newNoteOptions__color__palette__red--active",
+      "newNoteOptions__color__palette__pink--active",
+      "newNoteOptions__color__palette__green--active",
+    ];
+    const colorBtns = document.querySelectorAll(".oneColor");
+
+    for (let i = 0; i < colorBtns.length; i++) {
+      colorBtns[i].addEventListener("click", () => {
+        colorBtns[active].classList.remove(activeClass[active]);
+        active = i;
+        colorBtns[i].classList.add(activeClass[i]);
+      });
     }
   }
 
@@ -33,7 +63,7 @@ class Note {
       if (title == "" || description == "" || tags == "") {
         return console.log("Wypelnij pola");
       } else {
-        this.createNote(new Date(), title, description, tags);
+        this.createNote(this.getFullDate(new Date()), title, description, tags);
         window.open("index.html", "_self");
       }
     });
@@ -82,7 +112,6 @@ class Note {
       ).style.visibility = "hidden";
 
       mainContainer.innerHTML = content;
-      // this.addingNoteView();
     }
   }
 
@@ -109,22 +138,77 @@ class Note {
     return notes;
   }
 
+  getActiveColor() {
+    const colors = document.querySelectorAll(".oneColor");
+    const schema = [
+      {
+        className: "newNoteOptions__color__palette__default--active",
+        colorName: "default",
+      },
+      {
+        className: "newNoteOptions__color__palette__turquoise--active",
+        colorName: "turquoise",
+      },
+      {
+        className: "newNoteOptions__color__palette__orange--active",
+        colorName: "orange",
+      },
+      {
+        className: "newNoteOptions__color__palette__red--active",
+        colorName: "red",
+      },
+      {
+        className: "newNoteOptions__color__palette__pink--active",
+        colorName: "pink",
+      },
+      {
+        className: "newNoteOptions__color__palette__green--active",
+        colorName: "green",
+      },
+    ];
+    let targetClassName = "";
+    let rightColor;
+
+    for (let i = 0; i < colors.length; i++) {
+      if (colors[i].classList.length == 3) {
+        console.log(colors[i].classList[2]);
+        targetClassName = colors[i].classList[2];
+      }
+    }
+    schema.map((value) => {
+      if (value.className == targetClassName) {
+        console.log(value.colorName);
+        rightColor = value.colorName;
+        return value.colorName;
+      }
+    });
+    return rightColor;
+  }
+
   createNote(noteDate, noteTitle, noteDescription, noteTags) {
+    const noteColor = this.getActiveColor();
     const note = {
       title: noteTitle,
       description: noteDescription,
       tags: noteTags,
       date: noteDate,
+      color: noteColor,
     };
+
+    console.log(noteColor);
+
     localStorage.setItem(`note${this.getCountOfNotes()}`, JSON.stringify(note));
     this.setCountOfNotes(this.getCountOfNotes());
   }
 
   createNoteBox(data, itemNumber) {
     const noteBox = document.createElement("div");
-    noteBox.classList.add("mainNotesView__list__noteBox");
-
     const dataParsed = JSON.parse(data);
+    noteBox.classList.add(`mainNotesView__list__noteBox`);
+    noteBox.classList.add(`${dataParsed.color}`);
+
+    console.log(dataParsed);
+
     let content = `
     <p class="mainNotesView__list__noteBox__date">${dataParsed.date}</p>
     <h4 class="mainNotesView__list__noteBox__title">${dataParsed.title}</h4>
@@ -160,12 +244,9 @@ class Note {
   redrawNotes(keyOfNote) {
     const notes = this.getAllNotes();
     const countOfNotes = notes.length;
-    console.log(countOfNotes);
-    console.log(notes);
-    console.log(keyOfNote);
     localStorage.clear();
     this.setCountOfNotes(-1);
-    for (let i = 0; i < notes.length - 1; i++) {
+    for (let i = 0; i < notes.length; i++) {
       const note = JSON.parse(notes[i]);
       localStorage.setItem(
         `note${this.getCountOfNotes()}`,
@@ -188,11 +269,5 @@ class Note {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const dupa = new Note();
-  // dupa.createNote(
-  //   "10.02.2020",
-  //   "Najlepszy tytuł",
-  //   "To jest kontent nie do odrzucenia. To jest kontent nie do odrzucenia. To jest kontent nie do odrzucenia. To jest kontent nie do odrzucenia.",
-  //   "ważne, nieważne, super, duperka"
-  // );
+  new Note();
 });

@@ -66,7 +66,7 @@
       </div>
       <div class="newNoteView">
         <div class="newNoteView__heading">
-          <h1 class="newNoteView__heading__text">Add a note</h1>
+          <h1 class="newNoteView__heading__text">Add a new note</h1>
         </div>
         <div class="newNoteView__info">
           <div class="newNoteView__info__title">
@@ -79,7 +79,7 @@
               name="description"
               id="description"
               cols="30"
-              rows="10"
+              rows="5"
               class="newNoteView__info__description__input"
             ></textarea>
           </div>
@@ -93,7 +93,32 @@
           <button class="newNoteView__buttons__cancel">Cancel</button>
         </div>
       </div>
-      <div class="newNoteOptions"></div>
+      <div class="newNoteOptions">
+        <div class="newNoteOptions__heading">
+          <h2 class="newNoteOptions__heading__text">Note settings</h2>
+        </div>
+        <div class="newNoteOptions__color">
+          <h3 class="newNoteOptions__color__text">Color</h3>
+          <div class="newNoteOptions__color__palette">
+            <div
+              class="newNoteOptions__color__palette__default oneColor newNoteOptions__color__palette__default--active"
+            ></div>
+            <div
+              class="newNoteOptions__color__palette__turquoise oneColor"
+            ></div>
+            <div class="newNoteOptions__color__palette__orange oneColor"></div>
+            <div class="newNoteOptions__color__palette__red oneColor"></div>
+            <div class="newNoteOptions__color__palette__pink oneColor"></div>
+            <div class="newNoteOptions__color__palette__green oneColor"></div>
+          </div>
+        </div>
+        <div class="newNoteOptions__reminder">
+          <h3 class="newNoteOptions__reminder__text">Remind date</h3>
+          <div class="newNoteOptions__reminder__date">
+            <input type="date" class="newNoteOptions__reminder__date__input" />
+          </div>
+        </div>
+      </div>
     </div>
     <script src="main.js"></script>
   </body>

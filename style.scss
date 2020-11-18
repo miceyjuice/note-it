@@ -327,6 +327,32 @@ a {
       flex-wrap: wrap;
       margin-top: 10rem;
       color: #fff;
+
+      .default {
+        background-color: #4e4ff8;
+        box-shadow: 0 0 1.5rem rgba($color: #4e4ff8, $alpha: 1);
+      }
+      .turquoise {
+        background-color: #24a1aa;
+        box-shadow: 0 0 1.5rem rgba($color: #24a1aa, $alpha: 1);
+      }
+      .orange {
+        background-color: #c98122;
+        box-shadow: 0 0 1.5rem rgba($color: #c98122, $alpha: 1);
+      }
+      .red {
+        background-color: #d2332d;
+        box-shadow: 0 0 1.5rem rgba($color: #d2332d, $alpha: 1);
+      }
+      .pink {
+        background-color: #c84d7e;
+        box-shadow: 0 0 1.5rem rgba($color: #c84d7e, $alpha: 1);
+      }
+      .green {
+        background-color: #3b9750;
+        box-shadow: 0 0 1.5rem rgba($color: #3b9750, $alpha: 1);
+      }
+
       &__noteBox:hover {
         .mainNotesView__list__noteBox__options {
           visibility: visible;
@@ -340,9 +366,10 @@ a {
         flex-wrap: wrap;
         padding: 4rem;
         margin: 6rem 0 0 5rem;
-        box-shadow: 0 0 3rem rgba($color: #4e4ff8, $alpha: 1);
+        box-shadow: 0 0 3rem rgba($color: #4e4ff8, $alpha: 0.3);
         border-radius: 1rem;
         background-color: #4e4ff8;
+        word-break: break-all;
 
         &__date {
           font-size: 1rem;
