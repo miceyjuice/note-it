@@ -7,9 +7,7 @@ class Note {
       this.notesCount = this.getCountOfNotes();
       this.createNoteBoard();
       this.deleteNote();
-      this.pinNote();
       this.addingNoteView();
-      console.log(this.getAllNotes());
     } else if (window.location.pathname == "/addnote.html") {
       this.getDataFromForm();
       this.changeNoteColor();
@@ -136,7 +134,6 @@ class Note {
 
     for (let i = 0; i < localStorageLength; i++) {
       notes.push(localStorage.getItem(`note${i}`));
-      console.log(notes);
     }
     return notes;
   }
@@ -210,6 +207,8 @@ class Note {
     noteBox.classList.add(`mainNotesView__list__noteBox`);
     noteBox.classList.add(`${dataParsed.color}`);
 
+    console.log(dataParsed);
+
     let content = `
     <p class="mainNotesView__list__noteBox__date">${dataParsed.date}</p>
     <h4 class="mainNotesView__list__noteBox__title">${dataParsed.title}</h4>
@@ -217,7 +216,7 @@ class Note {
     <p class="mainNotesView__list__noteBox__tags">${dataParsed.tags}</p>
     <div class="mainNotesView__list__noteBox__options">
       <div class="mainNotesView__list__noteBox__options__edit"></div>
-      <div class="mainNotesView__list__noteBox__options__pin" data-key="${itemNumber}"></div>
+      <div class="mainNotesView__list__noteBox__options__pin"></div>
       <div class="mainNotesView__list__noteBox__options__delete" data-key="${itemNumber}"></div>
       <div class="mainNotesView__list__noteBox__options__check"></div>
     </div>
@@ -236,33 +235,7 @@ class Note {
       for (let i = 0; i < deleteBtn.length; i++) {
         deleteBtn[i].addEventListener("click", () => {
           localStorage.removeItem(`note${deleteBtn[i].dataset.key}`);
-          //this.redrawNotes(i);
-          this.getAllNotes();
-        });
-        console.log(this.getAllNotes());
-      }
-    }
-  }
-
-  pinNote() {
-    let removedNote = [];
-    if (this.getCountOfNotes() > 0) {
-      const pinBtn = document.querySelectorAll(
-        ".mainNotesView__list__noteBox__options__pin"
-      );
-
-      for (let i = 0; i < pinBtn.length; i++) {
-        pinBtn[i].addEventListener("click", () => {
-          const noteNumber = pinBtn[i].dataset.key;
-          // const pinnedNote = JSON.parse(notes[i]);
-          // console.log(pinnedNote);
-          // localStorage.removeItem(`note${noteNumber}`);
-          // this.redrawNotes();
-          // localStorage.setItem(`note${noteNumber}`, JSON.stringify(pinnedNote));
-          // location.reload();
-          removedNote = this.notes.splice(noteNumber, 1);
-          console.log(removedNote);
-          this.redrawNotes();
+          this.redrawNotes(i);
         });
       }
     }
@@ -270,19 +243,19 @@ class Note {
 
   redrawNotes(keyOfNote) {
     const notes = this.getAllNotes();
-    console.log(notes);
     const countOfNotes = notes.length;
     localStorage.clear();
     this.setCountOfNotes(-1);
-    for (let i = 0; i < countOfNotes; i++) {
+    for (let i = 0; i < notes.length; i++) {
       const note = JSON.parse(notes[i]);
       localStorage.setItem(
         `note${this.getCountOfNotes()}`,
         JSON.stringify(note)
       );
       this.setCountOfNotes(this.getCountOfNotes());
+      console.log(note);
     }
-    //window.location.reload();
+    window.location.reload();
   }
 
   createNoteBoard() {
