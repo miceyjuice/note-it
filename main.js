@@ -79,6 +79,11 @@ class Note {
           window.open("addnote.html", "_self");
         });
       } else {
+        document
+          .querySelector(".mainNotesView__topBar__search__input")
+          .addEventListener("keydown", () => {
+            this.searchThroughNotes();
+          });
         document.querySelector(".topBtn").addEventListener("click", () => {
           window.open("addnote.html", "_self");
         });
@@ -112,6 +117,34 @@ class Note {
       ).style.visibility = "hidden";
 
       mainContainer.innerHTML = content;
+    }
+  }
+
+  searchThroughNotes() {
+    const searchBar = document.querySelector(
+      ".mainNotesView__topBar__search__input"
+    );
+    const filter = searchBar.value.toUpperCase();
+
+    const noteBoxes = document.querySelectorAll(
+      ".mainNotesView__list__noteBox"
+    );
+
+    for (let i = 0; i < noteBoxes.length; i++) {
+      const text = noteBoxes[i].getElementsByTagName("p")[0];
+      const head = noteBoxes[i].getElementsByTagName("h4")[0];
+      const textValue = text.textContent || text.innerText;
+      const headValue = head.textContent || head.innerText;
+
+      if (
+        textValue.toUpperCase().indexOf(filter) > -1 ||
+        headValue.toUpperCase().indexOf(filter) > -1
+      ) {
+        console.log(textValue.toUpperCase().indexOf(filter));
+        noteBoxes[i].style.display = "flex";
+      } else {
+        noteBoxes[i].style.display = "none";
+      }
     }
   }
 
