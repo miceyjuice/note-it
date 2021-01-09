@@ -17,7 +17,7 @@ class Note {
   getFullDate(date) {
     let result = `${date.getDate()}.${
       date.getMonth() + 1
-    }.${date.getFullYear()}`;
+      }.${date.getFullYear()}`;
 
     return result;
   }
@@ -131,7 +131,7 @@ class Note {
     );
 
     for (let i = 0; i < noteBoxes.length; i++) {
-      const text = noteBoxes[i].getElementsByTagName("p")[0];
+      const text = noteBoxes[i].getElementsByTagName("p");
       const head = noteBoxes[i].getElementsByTagName("h4")[0];
       const textValue = text.textContent || text.innerText;
       const headValue = head.textContent || head.innerText;
@@ -267,7 +267,13 @@ class Note {
 
       for (let i = 0; i < deleteBtn.length; i++) {
         deleteBtn[i].addEventListener("click", () => {
-          localStorage.removeItem(`note${deleteBtn[i].dataset.key}`);
+          for (let j = i; j < localStorage.length - 1; j++) {
+            localStorage.setItem(`note${j}`, localStorage.getItem(`note${j + 1}`));
+          }
+          localStorage.removeItem(`note${localStorage.length - 2}`);
+
+          this.notesCount = this.getCountOfNotes();
+
           this.redrawNotes(i);
         });
       }
