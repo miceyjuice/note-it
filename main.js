@@ -17,7 +17,7 @@ class Note {
   getFullDate(date) {
     let result = `${date.getDate()}.${
       date.getMonth() + 1
-      }.${date.getFullYear()}`;
+    }.${date.getFullYear()}`;
 
     return result;
   }
@@ -133,17 +133,28 @@ class Note {
     for (let i = 0; i < noteBoxes.length; i++) {
       const text = noteBoxes[i].getElementsByTagName("p");
       const head = noteBoxes[i].getElementsByTagName("h4")[0];
-      const textValue = text.textContent || text.innerText;
-      const headValue = head.textContent || head.innerText;
 
-      if (
-        textValue.toUpperCase().indexOf(filter) > -1 ||
-        headValue.toUpperCase().indexOf(filter) > -1
-      ) {
-        console.log(textValue.toUpperCase().indexOf(filter));
-        noteBoxes[i].style.display = "flex";
-      } else {
-        noteBoxes[i].style.display = "none";
+      const headValue = head.textContent || head.innerText;
+      let textValue;
+
+      for (let j = 0; j < text.length; j++) {
+        textValue = text[j].textContent || text[j].innerText;
+      }
+
+      if (text != "" || head != "") {
+        console.log(textValue);
+        console.log(headValue);
+        for (let k = 0; k < textValue.length; k++) {
+          if (
+            textValue[k].toUpperCase().indexOf(filter) > -1 ||
+            headValue.toUpperCase().indexOf(filter) > -1
+          ) {
+            console.log(textValue.toUpperCase().indexOf(filter));
+            noteBoxes[i].style.display = "flex";
+          } else {
+            noteBoxes[i].style.display = "none";
+          }
+        }
       }
     }
   }
@@ -268,7 +279,10 @@ class Note {
       for (let i = 0; i < deleteBtn.length; i++) {
         deleteBtn[i].addEventListener("click", () => {
           for (let j = i; j < localStorage.length - 1; j++) {
-            localStorage.setItem(`note${j}`, localStorage.getItem(`note${j + 1}`));
+            localStorage.setItem(
+              `note${j}`,
+              localStorage.getItem(`note${j + 1}`)
+            );
           }
           localStorage.removeItem(`note${localStorage.length - 2}`);
 
