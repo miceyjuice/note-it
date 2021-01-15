@@ -15,11 +15,7 @@ class Note {
   }
 
   getFullDate(date) {
-    let result = `${date.getDate()}.${
-      date.getMonth() + 1
-    }.${date.getFullYear()}`;
-
-    return result;
+    return date.toLocaleDateString();
   }
 
   changeNoteColor() {
@@ -237,6 +233,7 @@ class Note {
       tags: noteTags,
       date: noteDate,
       color: noteColor,
+      pinned: false,
     };
 
     console.log(noteColor);
@@ -294,12 +291,21 @@ class Note {
     }
   }
 
+  pinNote() {
+    const pinBtn = document.querySelectorAll(
+      ".mainNotesView__list__noteBox__options__pin"
+    );
+
+    for (let i = 0; i < pinBtn.length; i++) {
+      pinBtn[i].addEventListener("click", () => {});
+    }
+  }
   redrawNotes(keyOfNote) {
     const notes = this.getAllNotes();
     const countOfNotes = notes.length;
     localStorage.clear();
     this.setCountOfNotes(-1);
-    for (let i = 0; i < notes.length; i++) {
+    for (let i = 0; i < countOfNotes; i++) {
       const note = JSON.parse(notes[i]);
       localStorage.setItem(
         `note${this.getCountOfNotes()}`,

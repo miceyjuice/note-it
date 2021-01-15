@@ -281,6 +281,7 @@ a {
           display: flex;
           align-items: center;
           outline: none;
+          margin-left: -32rem;
 
           &:hover {
             cursor: pointer;
@@ -323,10 +324,19 @@ a {
       }
     }
 
+    &__listPinned {
+      margin-top: 15rem;
+      visibility: hidden;
+
+      &__title {
+        font-size: 2rem;
+        padding-left: 5rem;
+      }
+    }
+
     &__list {
       display: flex;
       flex-wrap: wrap;
-      margin-top: 10rem;
       color: #fff;
 
       .default {
@@ -366,16 +376,17 @@ a {
         display: flex;
         flex-wrap: wrap;
         padding: 4rem;
-        margin: 6rem 0 0 5rem;
+        margin: 1rem 0 0 5rem;
         box-shadow: 0 0 3rem rgba($color: #4e4ff8, $alpha: 0.3);
         border-radius: 1rem;
         background-color: #4e4ff8;
         word-break: break-all;
 
         &__date {
-          font-size: 1rem;
+          font-size: 1.2rem;
           font-weight: 300;
           flex-basis: 100%;
+          letter-spacing: 0.2rem;
         }
         &__title {
           font-size: 2.3rem;
@@ -410,6 +421,13 @@ a {
             background-size: cover;
             height: 3rem;
             width: 3rem;
+            filter: opacity(30%);
+            transition: 0.2s ease-in-out;
+
+            &:hover {
+              cursor: pointer;
+              filter: opacity(100%);
+            }
           }
           &__pin {
             background-image: url(./assets/img/pin-white.png);
@@ -418,6 +436,13 @@ a {
             background-size: cover;
             height: 3rem;
             width: 1.7rem;
+            filter: opacity(30%);
+            transition: 0.2s ease-in-out;
+
+            &:hover {
+              cursor: pointer;
+              filter: opacity(100%);
+            }
           }
           &__delete {
             background-image: url(./assets/img/delete-white.png);
@@ -426,12 +451,26 @@ a {
             background-size: cover;
             height: 3rem;
             width: 3rem;
+            filter: opacity(30%);
+            transition: 0.2s ease-in-out;
+
+            &:hover {
+              cursor: pointer;
+              filter: opacity(100%);
+            }
           }
           &__check {
             height: 3rem;
             width: 3rem;
             border: 0.2rem solid #fff;
             border-radius: 0.5rem;
+            filter: opacity(30%);
+            transition: 0.2s ease-in-out;
+
+            &:hover {
+              cursor: pointer;
+              filter: opacity(100%);
+            }
           }
         }
       }
