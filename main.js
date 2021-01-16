@@ -65,6 +65,15 @@ class Note {
     });
   }
 
+  togglePin(noteIndex) {
+    const notes = this.getAllNotes();
+    const note = JSON.parse(notes[noteIndex]);
+
+    note.pinned = !note.pinned;
+    localStorage.setItem(`note${noteIndex}`, JSON.stringify(note));
+    window.location.reload();
+  }
+
   addingNoteView() {
     if (
       window.location.pathname == "/" ||
@@ -225,7 +234,13 @@ class Note {
     return rightColor;
   }
 
-  createNote(noteDate, noteTitle, noteDescription, noteTags) {
+  createNote(
+    noteDate,
+    noteTitle,
+    noteDescription,
+    noteTags,
+    notePinned = false
+  ) {
     const noteColor = this.getActiveColor();
     const note = {
       title: noteTitle,
@@ -233,7 +248,7 @@ class Note {
       tags: noteTags,
       date: noteDate,
       color: noteColor,
-      pinned: false,
+      pinned: notePinned,
     };
 
     console.log(noteColor);
@@ -264,6 +279,11 @@ class Note {
     `;
 
     noteBox.innerHTML = content;
+    noteBox
+      .querySelector(".mainNotesView__list__noteBox__options__pin")
+      .addEventListener("click", () => {
+        this.togglePin(itemNumber);
+      });
     return noteBox;
   }
 
@@ -290,7 +310,6 @@ class Note {
       }
     }
   }
-
   pinNote() {
     const pinBtn = document.querySelectorAll(
       ".mainNotesView__list__noteBox__options__pin"
@@ -320,9 +339,15 @@ class Note {
   createNoteBoard() {
     const notes = this.getAllNotes();
     const board = document.querySelector(".mainNotesView__list");
+    const boardPinned = document.querySelector(".mainNotesView__listPinned");
 
     for (let i = 0; i < notes.length; i++) {
-      board.appendChild(this.createNoteBox(notes[i], i));
+      if (JSON.parse(notes[i]).pinned) {
+        boardPinned.appendChild(this.createNoteBox(notes[i], i));
+        boardPinned.style.visibility = "visible";
+      } else {
+        board.appendChild(this.createNoteBox(notes[i], i));
+      }
     }
   }
 }

@@ -433,13 +433,64 @@ a {
 }
 
 .container .mainNotesView__listPinned {
-  margin-top: 15rem;
   visibility: hidden;
+  color: #fff;
+  margin-bottom: 5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 15rem 0 5rem 10rem;
+  margin-left: -5rem;
+  -webkit-box-shadow: 0 1rem 5rem rgba(0, 0, 0, 0.1);
+          box-shadow: 0 1rem 5rem rgba(0, 0, 0, 0.1);
+  gap: 3rem;
 }
 
 .container .mainNotesView__listPinned__title {
   font-size: 2rem;
-  padding-left: 5rem;
+  color: #3a3a3a;
+  font-weight: 500;
+  letter-spacing: 0.1rem;
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+
+.container .mainNotesView__listPinned .default {
+  background-color: #4e4ff8;
+  -webkit-box-shadow: 0 0 1.5rem #4e4ff8;
+          box-shadow: 0 0 1.5rem #4e4ff8;
+}
+
+.container .mainNotesView__listPinned .turquoise {
+  background-color: #24a1aa;
+  -webkit-box-shadow: 0 0 1.5rem #24a1aa;
+          box-shadow: 0 0 1.5rem #24a1aa;
+}
+
+.container .mainNotesView__listPinned .orange {
+  background-color: #c98122;
+  -webkit-box-shadow: 0 0 1.5rem #c98122;
+          box-shadow: 0 0 1.5rem #c98122;
+}
+
+.container .mainNotesView__listPinned .red {
+  background-color: #d2332d;
+  -webkit-box-shadow: 0 0 1.5rem #d2332d;
+          box-shadow: 0 0 1.5rem #d2332d;
+}
+
+.container .mainNotesView__listPinned .pink {
+  background-color: #c84d7e;
+  -webkit-box-shadow: 0 0 1.5rem #c84d7e;
+          box-shadow: 0 0 1.5rem #c84d7e;
+}
+
+.container .mainNotesView__listPinned .green {
+  background-color: #3b9750;
+  -webkit-box-shadow: 0 0 1.5rem #3b9750;
+          box-shadow: 0 0 1.5rem #3b9750;
 }
 
 .container .mainNotesView__list {
@@ -449,6 +500,8 @@ a {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   color: #fff;
+  gap: 3rem;
+  margin-left: 5rem;
 }
 
 .container .mainNotesView__list .default {
@@ -501,7 +554,6 @@ a {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   padding: 4rem;
-  margin: 1rem 0 0 5rem;
   -webkit-box-shadow: 0 0 3rem rgba(78, 79, 248, 0.3);
           box-shadow: 0 0 3rem rgba(78, 79, 248, 0.3);
   border-radius: 1rem;
